@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include <libopencm3/cm3/systick.h>
+#include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/usb/cdc.h>
 #include <libopencm3/usb/dfu.h>
@@ -258,6 +259,11 @@ static void usb_set_config(usbd_device *usbd_dev, uint16_t wValue) {
 usbd_device* usb_setup(void) {
   unsigned int i;
   unsigned char serial = 0;
+
+  gpio_set(GPIOA, GPIO1);
+  gpio_clear(GPIOB, GPIO6 | GPIO7);
+  gpio_mode_setup(GPIOA, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO1);
+  gpio_mode_setup(GPIOB, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO6 | GPIO7);
 
   /* Delay briefly to give bus enough time detect reconnection */
   for (i = 0; i != 4096; i++)

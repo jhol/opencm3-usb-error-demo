@@ -15,13 +15,13 @@
 #include <libopencm3/usb/dfu.h>
 #include <libopencm3/usb/usbd.h>
 
-#define RS485_1_COMM_IFACE_NUM 0
-#define RS485_1_DATA_IFACE_NUM 1
+#define CDCACM_1_COMM_IFACE_NUM 0
+#define CDCACM_1_DATA_IFACE_NUM 1
 #define DFU_IFACE_NUM 2
 
-#define EP_RS485_1_DATA_OUT 0x01
-#define EP_RS485_1_DATA_IN 0x82
-#define EP_RS485_1_COMM 0x83
+#define EP_CDCACM_1_DATA_OUT 0x01
+#define EP_CDCACM_1_DATA_IN 0x82
+#define EP_CDCACM_1_COMM 0x83
 
 #define CONFIG_DI_TYPE 0x0001
 
@@ -51,7 +51,7 @@ static const struct usb_endpoint_descriptor cdcacm_comm_endp[][1] = {{
   {
     .bLength = USB_DT_ENDPOINT_SIZE,
     .bDescriptorType = USB_DT_ENDPOINT,
-    .bEndpointAddress = EP_RS485_1_COMM,
+    .bEndpointAddress = EP_CDCACM_1_COMM,
     .bmAttributes = USB_ENDPOINT_ATTR_INTERRUPT,
     .wMaxPacketSize = 16,
     .bInterval = 255,
@@ -62,14 +62,14 @@ static const struct usb_endpoint_descriptor cdcacm_data_endp[][2] = {{
   {
     .bLength = USB_DT_ENDPOINT_SIZE,
     .bDescriptorType = USB_DT_ENDPOINT,
-    .bEndpointAddress = EP_RS485_1_DATA_OUT,
+    .bEndpointAddress = EP_CDCACM_1_DATA_OUT,
     .bmAttributes = USB_ENDPOINT_ATTR_BULK,
     .wMaxPacketSize = 64,
     .bInterval = 1,
   }, {
     .bLength = USB_DT_ENDPOINT_SIZE,
     .bDescriptorType = USB_DT_ENDPOINT,
-    .bEndpointAddress = EP_RS485_1_DATA_IN,
+    .bEndpointAddress = EP_CDCACM_1_DATA_IN,
     .bmAttributes = USB_ENDPOINT_ATTR_BULK,
     .wMaxPacketSize = 64,
     .bInterval = 1,
@@ -142,7 +142,7 @@ static const struct {
 static const struct usb_interface_descriptor cdcacm_comm_iface[] = {{
   .bLength = USB_DT_INTERFACE_SIZE,
   .bDescriptorType = USB_DT_INTERFACE,
-  .bInterfaceNumber = RS485_1_COMM_IFACE_NUM,
+  .bInterfaceNumber = CDCACM_1_COMM_IFACE_NUM,
   .bAlternateSetting = 0,
   .bNumEndpoints = 1,
   .bInterfaceClass = USB_CLASS_CDC,
@@ -159,7 +159,7 @@ static const struct usb_interface_descriptor cdcacm_comm_iface[] = {{
 static const struct usb_interface_descriptor cdcacm_data_iface[] = {{
   .bLength = USB_DT_INTERFACE_SIZE,
   .bDescriptorType = USB_DT_INTERFACE,
-  .bInterfaceNumber = RS485_1_DATA_IFACE_NUM,
+  .bInterfaceNumber = CDCACM_1_DATA_IFACE_NUM,
   .bAlternateSetting = 0,
   .bNumEndpoints = 2,
   .bInterfaceClass = USB_CLASS_DATA,

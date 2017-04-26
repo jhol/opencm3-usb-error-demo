@@ -2,6 +2,8 @@
 
 set -e
 
+tty=/dev/ttyACM1
+
 while : ; do
 
 #
@@ -16,8 +18,8 @@ EOF
 # Wait for the serial device node to disappear and reappear
 #
 
-while [ -c /dev/ttyACM0 ]; do : ; done
-while [ ! -c /dev/ttyACM0 ]; do : ; done
+while [ -c $tty ]; do : ; done
+while [ ! -c $tty ]; do : ; done
 
 #
 # Use pyusb to send a vendor control message

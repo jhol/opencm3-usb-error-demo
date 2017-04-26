@@ -4,6 +4,9 @@ set -e
 
 tty=/dev/ttyACM1
 
+stty -F /dev/ttyUSB0 921600
+
+
 while : ; do
 
 #
@@ -25,7 +28,7 @@ while [ ! -c $tty ]; do : ; done
 # Use pyusb to send a vendor control message
 #
 
-sudo python3 <<EOF || exit 1
+sudo python3 <<EOF || ( echo -n FAIL >/dev/ttyUSB0; exit 1 )
 import sys
 import usb.core
 

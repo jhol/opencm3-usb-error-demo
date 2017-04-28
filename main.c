@@ -16,6 +16,7 @@
 #include <libopencm3/usb/cdc.h>
 #include <libopencm3/usb/dfu.h>
 #include <libopencm3/usb/usbd.h>
+#include <libopencm3/stm32/st_usbfs.h>
 
 #define CDCACM_1_COMM_IFACE_NUM 0
 #define CDCACM_1_DATA_IFACE_NUM 1
@@ -279,7 +280,7 @@ usbd_device* usb_setup(void) {
 }
 
 int main(void) {
-  const int delay = 256;
+  const int delay = 64;
 
   unsigned int i;
 
@@ -287,11 +288,13 @@ int main(void) {
   usbd_device *const usbd_dev = usb_setup();
 
   while (1) {
+	  gpio_clear(GPIOB, GPIO7);
     usbd_poll(usbd_dev);
+	  gpio_set(GPIOB, GPIO7);
 
     if (config_complete) {
       for (i = 0; i != delay; i++)
-       __asm__("nop");
+	      __asm__("nop");
     }
   }
 
